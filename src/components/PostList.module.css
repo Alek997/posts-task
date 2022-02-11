@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+  border: 0.1rem solid gray;
+  border-radius: 0.5rem;
+  width: 90%;
+  margin: 1rem 0;
+}
+
+.postTitle {
+  color: black;
+}
+
+.authorName {
+  color: black;
+}
+
+.postBody {
+  color: gray;
+}

@@ -2,10 +2,10 @@ import React from 'react'
 import { CommentDto } from '../types/dto'
 
 interface Props {
-  comments: CommentDto[]
+  comments?: CommentDto[]
 }
 
-const CommentList: React.FC<Props> = ({ comments }) => {
+const CommentList: React.FC<Props> = ({ comments = [] }) => {
   return (
     <div>
       {comments?.map(comment => (
