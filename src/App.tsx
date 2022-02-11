@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<PostsScreen />} />
         <Route path="/posts" element={<PostsScreen />} />
-        <Route path="/post/:invoiceId" element={<PostScreen />} />
+        <Route path="/post/:postId" element={<PostScreen />} />
         <Route
           path="*"
           element={
