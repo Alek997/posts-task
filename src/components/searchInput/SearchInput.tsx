@@ -1,10 +1,15 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useContext, useEffect } from 'react'
+import { GlobalContext } from '../../context/GlobalProvider'
 
 interface Props {
   onChange(event: ChangeEvent<HTMLInputElement>): void
 }
 
 const SearchInput: React.FC<Props> = ({ onChange }) => {
+  const { message } = useContext(GlobalContext)
+  useEffect(() => {
+    console.log(`${message} SearchInput`)
+  }, [])
   return (
     <div>
       <input

@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Post } from '../../types/domain'
 import styles from './PostList.module.css'
 import CommentList from '../commentList/CommentList'
+import { GlobalContext } from '../../context/GlobalProvider'
 
 interface Props {
   posts: Post[] | undefined
 }
 
 const PostList: React.FC<Props> = ({ posts }) => {
+  const { message } = useContext(GlobalContext)
+  useEffect(() => {
+    console.log(`${message} PostList`)
+  }, [])
   return (
     <div className={styles.container}>
       {posts?.map(post => (

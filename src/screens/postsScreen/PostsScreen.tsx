@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PostList from '../../components/postList/PostList'
 import styles from './PostsScreen.module.css'
 import SearchInput from '../../components/searchInput/SearchInput'
 import { useGroupedPosts } from '../../utils/postHooks'
 import { PostDto } from '../../types/dto'
+import { GlobalContext } from '../../context/GlobalProvider'
 
 const PostsScreen: React.FC = () => {
   const query = useGroupedPosts()
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredPosts, setFilteredPosts] = useState<PostDto[]>([])
+
+  const { message } = useContext(GlobalContext)
+  useEffect(() => {
+    console.log(`${message} PostsScreen`)
+  }, [])
 
   useEffect(() => {
     if (!query.loading && !query.error) {

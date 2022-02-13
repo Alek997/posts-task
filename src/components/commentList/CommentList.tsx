@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { GlobalContext } from '../../context/GlobalProvider'
 import { CommentDto } from '../../types/dto'
 import styles from './CommentList.module.css'
 
@@ -7,6 +8,10 @@ interface Props {
 }
 
 const CommentList: React.FC<Props> = ({ comments = [] }) => {
+  const { message } = useContext(GlobalContext)
+  useEffect(() => {
+    console.log(`${message} CommentList`)
+  }, [])
   return (
     <div className={styles.container}>
       <h5 className={styles.title}>Comments</h5>
