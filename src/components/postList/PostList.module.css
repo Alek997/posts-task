@@ -12,8 +12,7 @@
   justify-content: center;
   align-items: flex-start;
   padding: 1rem;
-  border: 0.1rem solid gray;
-  border-radius: 0.5rem;
+  border-bottom: 0.1rem solid gray;
   width: 90%;
   margin: 1rem 0;
 }

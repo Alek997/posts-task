@@ -8,7 +8,7 @@ export const fetchUsers = async (params = {}) => {
 }
 
 export const fetchUserById = async (id: number) => {
-  const url = apiUrl + '/posts/' + id
+  const url = apiUrl + '/users/' + id
 
   const { data } = await http.get<UserDto>(url, {
     params: { id }

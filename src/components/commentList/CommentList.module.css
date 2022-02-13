@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+  width: 90%;
+  margin: 1rem 0;
+}
+
+.commentTitle {
+  color: black;
+}
+
+.commentBody {
+  color: gray;
+}
+
+.title {
+  align-self: flex-start;
+}

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Post } from '../types/domain'
+import { Post } from '../../types/domain'
 import styles from './PostList.module.css'
-import CommentList from './CommentList'
+import CommentList from '../commentList/CommentList'
 
 interface Props {
   posts: Post[]
@@ -18,8 +18,7 @@ const PostList: React.FC<Props> = ({ posts }) => {
             <p className={styles.authorName}>{post.author?.username}</p>
             <p className={styles.postBody}>{post.body}</p>
 
-            {/* <p>commentNumbers:{post?.comments?.length}</p> */}
-            {/* <CommentList comments={post.comments} /> */}
+            <CommentList comments={post.comments} />
           </div>
         </Link>
       ))}
