@@ -1,10 +1,6 @@
-import { CommentDto, UserDto } from './dto'
+import { CommentDto, PostDto, UserDto } from './dto'
 
-export interface Post {
-  userId: number
-  id: number
-  title: string
-  body: string
+export interface Post extends PostDto {
   comments?: CommentDto[]
   author?: UserDto
 }

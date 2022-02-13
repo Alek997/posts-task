@@ -1,45 +1,47 @@
-import React, { useEffect, useState } from 'react'
-import { fetchComments } from '../services/commentService'
-import { fetchPosts } from '../services/postService'
+import { useEffect, useState } from 'react'
 import { Post } from '../types/domain'
-import { groupBy, keyBy, Dictionary } from 'lodash'
-import { CommentDto, PostDto, UserDto } from '../types/dto'
-import { fetchUsers } from '../services/userService'
+import { PostDto } from '../types/dto'
+import useQuery from './useQuery'
+import { useComments } from './commentHooks'
+import { useUsers } from './userHooks'
 
-export const usePosts = () => {
-  const [posts, setPosts] = useState<PostDto[]>([])
-  const [comments, setComments] = useState<CommentDto[]>([])
-  const [users, setUsers] = useState<Dictionary<UserDto>>()
+export const usePosts = () =>
+  useQuery<PostDto[]>('https://jsonplaceholder.typicode.com/posts')
 
+export const useGroupedPosts = () => {
   const [groupedPosts, setGroupedPosts] = useState<Post[]>([])
+  const postQuery = usePosts()
+  const commentQuery = useComments()
+  const userQuery = useUsers()
 
   useEffect(() => {
-    fetchPosts().then(data => {
-      setPosts(data)
-    })
-    fetchComments().then(data => {
-      setComments(data)
-    })
-    fetchUsers().then(data => {
-      const users = keyBy(data, 'id')
-      setUsers(users)
-    })
-  }, [])
-
-  useEffect(() => {
-    if (posts.length > 0 && comments.length > 0 && !!users) {
-      const groupedComments = groupBy(comments, 'postId')
+    if (
+      postQuery.data &&
+      commentQuery.data &&
+      userQuery.data &&
+      groupedPosts.length === 0
+    ) {
       setGroupedPosts(
-        posts?.map(post => ({
+        postQuery.data?.map(post => ({
           ...post,
-          comments: groupedComments[post.id],
-          author: users[post.userId]
+          comments: commentQuery.byPostId[post.id],
+          author: userQuery.byId[post.userId]
         }))
       )
     }
-  }, [posts, comments])
+  }, [postQuery, commentQuery, userQuery])
 
   return {
-    groupedPosts
+    data: groupedPosts,
+    loading: postQuery.loading || commentQuery.loading || userQuery.loading,
+    error: postQuery.error || commentQuery.error || userQuery.error
   }
+}
+
+export const usePost = (postId: number) => {
+  useQuery<PostDto[]>('https://jsonplaceholder.typicode.com/posts')
+
+  const postQuery = usePosts()
+  const commentQuery = useComments()
+  const userQuery = useUsers()
 }

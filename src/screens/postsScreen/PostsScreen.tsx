@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import PostList from '../../components/postList/PostList'
 import styles from './PostsScreen.module.css'
-import { usePosts } from '../../utils/postHooks'
 import SearchInput from '../../components/searchInput/SearchInput'
+import { useGroupedPosts } from '../../utils/postHooks'
+import { PostDto } from '../../types/dto'
 
 const PostsScreen: React.FC = () => {
-  const { groupedPosts } = usePosts()
+  const query = useGroupedPosts()
   const [searchQuery, setSearchQuery] = useState('')
-  const [filteredPosts, setFilteredPosts] = useState(groupedPosts)
+  const [filteredPosts, setFilteredPosts] = useState<PostDto[]>([])
 
   useEffect(() => {
-    if (groupedPosts.length > 0) {
+    if (!query.loading && !query.error) {
       setFilteredPosts(
-        groupedPosts.filter(post =>
+        query.data?.filter(post =>
           post.title.toLowerCase().includes(searchQuery.toLowerCase())
         )
       )
     }
-  }, [groupedPosts, searchQuery])
+  }, [searchQuery, query.data])
+
+  if (query.loading) {
+    return <p>Loading...</p>
+  }
+  if (query.error) {
+    return <p>Error: {query.error}</p>
+  }
 
   return (
     <div className={`global ${styles.container}`}>

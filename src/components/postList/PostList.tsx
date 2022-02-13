@@ -5,7 +5,7 @@ import styles from './PostList.module.css'
 import CommentList from '../commentList/CommentList'
 
 interface Props {
-  posts: Post[]
+  posts: Post[] | undefined
 }
 
 const PostList: React.FC<Props> = ({ posts }) => {
