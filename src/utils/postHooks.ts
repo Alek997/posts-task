@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Post } from '../types/domain'
-import { PostDto } from '../types/dto'
+import { CommentDto, PostDto, UserDto } from '../types/dto'
 import useQuery from './useQuery'
 import { useComments } from './commentHooks'
 import { useUsers } from './userHooks'
 
 export const usePosts = () =>
-  useQuery<PostDto[]>('https://jsonplaceholder.typicode.com/posts')
+  useQuery<PostDto[]>(`${process.env.REACT_APP_API_URL}/posts`)
 
 export const useGroupedPosts = () => {
   const [groupedPosts, setGroupedPosts] = useState<Post[]>([])
@@ -39,9 +39,25 @@ export const useGroupedPosts = () => {
 }
 
 export const usePost = (postId: number) => {
-  useQuery<PostDto[]>('https://jsonplaceholder.typicode.com/posts')
+  const postQuery = useQuery<PostDto>(
+    `${process.env.REACT_APP_API_URL}/posts/${postId}`
+  )
 
-  const postQuery = usePosts()
-  const commentQuery = useComments()
-  const userQuery = useUsers()
+  const userQuery = useQuery<UserDto>(
+    `${process.env.REACT_APP_API_URL}/users/${postQuery.data?.userId}`,
+    !!postQuery.data?.userId
+  )
+  const commentQuery = useQuery<CommentDto[]>(
+    `${process.env.REACT_APP_API_URL}/comments?postId=${postId}`
+  )
+
+  return {
+    data: {
+      ...postQuery.data,
+      author: userQuery.data,
+      comments: commentQuery.data
+    },
+    loading: postQuery.loading || userQuery.loading || commentQuery.loading,
+    error: postQuery.error || userQuery.error || commentQuery.error
+  }
 }

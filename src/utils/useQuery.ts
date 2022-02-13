@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import axios, { AxiosResponse } from 'axios'
 
-const useQuery = <T>(url: string) => {
+const useQuery = <T>(url: string, enabled = true) => {
   const [data, setData] = useState<T>()
   const [error, setError] = useState<string>()
   const [loading, setLoading] = useState(false)
@@ -22,8 +22,8 @@ const useQuery = <T>(url: string) => {
   }, [url])
 
   useEffect(() => {
-    runQuery()
-  }, [runQuery])
+    if (enabled) runQuery()
+  }, [runQuery, enabled])
 
   return { data, loading, error, refetch: runQuery }
 }

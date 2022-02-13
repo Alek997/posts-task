@@ -4,7 +4,7 @@ import useQuery from './useQuery'
 
 export const useComments = () => {
   const query = useQuery<CommentDto[]>(
-    'https://jsonplaceholder.typicode.com/comments'
+    `${process.env.REACT_APP_API_URL}/comments`
   )
 
   return {
