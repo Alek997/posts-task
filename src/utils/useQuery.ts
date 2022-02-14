@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react'
-import axios, { AxiosResponse } from 'axios'
 
 const useQuery = <T>(url: string, enabled = true) => {
   const [data, setData] = useState<T>()
@@ -13,12 +12,15 @@ const useQuery = <T>(url: string, enabled = true) => {
 
   // this function is calling useCallback to stop an infinite loop since it is in the dependency array of useEffect
   const runQuery = useCallback(() => {
-    const handleSuccess = (res: AxiosResponse<T>) => {
-      setData(res.data)
+    const handleSuccess = (res: T) => {
+      setData(res)
       setLoading(false)
     }
     setLoading(true)
-    axios.get<T>(url).then(handleSuccess).catch(handleError)
+    fetch(url)
+      .then(response => response.json())
+      .then(handleSuccess)
+      .catch(handleError)
   }, [url])
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PostList from '../../components/postList/PostList'
-import styles from './PostsScreen.module.css'
 import SearchInput from '../../components/searchInput/SearchInput'
 import { useGroupedPosts } from '../../utils/postHooks'
 import { PostDto } from '../../types/dto'
@@ -34,7 +33,7 @@ const PostsScreen: React.FC = () => {
   }
 
   return (
-    <div className={`global ${styles.container}`}>
+    <div className="global">
       <SearchInput onChange={event => setSearchQuery(event.target.value)} />
       <PostList posts={filteredPosts} />
     </div>
