@@ -10,7 +10,6 @@ const useQuery = <T>(url: string, enabled = true) => {
     setLoading(false)
   }
 
-  // this function is calling useCallback to stop an infinite loop since it is in the dependency array of useEffect
   const runQuery = useCallback(() => {
     const handleSuccess = (res: T) => {
       setData(res)

@@ -24,11 +24,20 @@ const PostScreen: React.FC = () => {
 
   return (
     <div className="global">
-      <h3 className={styles.postTitle}>{query.data.title}</h3>
-      <p className={styles.authorName}>{query.data.author?.username}</p>
-      <p className={styles.postBody}>{query.data.body}</p>
+      <h3 data-testid="post-title-id" className={styles.postTitle}>
+        {query.data.title}
+      </h3>
+      <p data-testid="author-name-id" className={styles.authorName}>
+        {query.data.author?.username}
+      </p>
+      <p data-testid="post-body-id" className={styles.postBody}>
+        {query.data.body}
+      </p>
 
-      <CommentList comments={query.data.comments} />
+      <CommentList
+        data-testid="comment-list-id"
+        comments={query.data.comments}
+      />
     </div>
   )
 }

@@ -34,8 +34,11 @@ const PostsScreen: React.FC = () => {
 
   return (
     <div className="global">
-      <SearchInput onChange={event => setSearchQuery(event.target.value)} />
-      <PostList posts={filteredPosts} />
+      <SearchInput
+        data-testid="search-input-id"
+        onChange={event => setSearchQuery(event.target.value)}
+      />
+      <PostList data-testid="post-list-id" posts={filteredPosts} />
     </div>
   )
 }
